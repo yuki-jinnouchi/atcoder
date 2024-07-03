@@ -1,0 +1,21 @@
+# Object files
+*.o
+
+# Libraries
+*.a
+
+# Executables
+*.out
+
+# on mac
+.DS_Store
+.vscode
+.github
+.devcontainer
+
+#project based
+.atcoder-tools
+in_*.txt
+out_*.txt
+metadata.json
+main
