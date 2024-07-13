@@ -11,7 +11,7 @@ using namespace std;
 // clang-format off
 /* accelration */
 // 高速バイナリ生成
-#pragma GCC target("avx")
+// #pragma GCC target("avx")
 #pragma GCC optimize("O3")
 #pragma GCC optimize("unroll-loops")
 // cin cout の結びつけ解除, stdioと同期しない(入出力非同期化)
@@ -29,6 +29,8 @@ using vvl = vector<vl>;
 using vvll = vector<vll>;
 using vs = vector<string>;
 using pii = pair<int, int>;
+
+using sts = set<string>;
 
 /* define short */
 #define pb push_back
@@ -55,17 +57,17 @@ inline ll in_ll() {ll x; cin >> x; return x;}
 inline string in_str() {string x; cin >> x; return x;}
 // search_length: 走査するベクトル長の上限(先頭から何要素目までを検索対象とするか、1始まりで)
 template <typename T> inline bool vector_finder(std::vector<T> vec, T element, unsigned int search_length) {
-    auto itr = std::find(vec.begin(), vec.end(), element);
-    size_t index = std::distance( vec.begin(), itr );
-    if (index == vec.size() || index >= search_length) {return false;} else {return true;}
+	auto itr = std::find(vec.begin(), vec.end(), element);
+	size_t index = std::distance( vec.begin(), itr );
+	if (index == vec.size() || index >= search_length) {return false;} else {return true;}
 }
 template <typename T> inline void print(const vector<T>& v, string s = " ")
-    {rep(i, v.size()) cout << v[i] << (i != (ll)v.size() - 1 ? s : "\n");}
+	{rep(i, v.size()) cout << v[i] << (i != (ll)v.size() - 1 ? s : "\n");}
 template <typename T, typename S> inline void print(const pair<T, S>& p)
-    {cout << p.first << " " << p.second << endl;}
+	{cout << p.first << " " << p.second << endl;}
 template <typename T> inline void print(const T& x) {cout << x << "\n";}
 template <typename T, typename S> inline void print(const vector<pair<T, S>>& v)
-    {for (auto&& p : v) print(p);}
+	{for (auto&& p : v) print(p);}
 // 第一引数と第二引数を比較し、第一引数(a)をより大きい/小さい値に上書き
 template <typename T> inline bool chmin(T& a, const T& b) {bool compare = a > b; if (a > b) a = b; return compare;}
 template <typename T> inline bool chmax(T& a, const T& b) {bool compare = a < b; if (a < b) a = b; return compare;}
@@ -76,29 +78,25 @@ template <typename T> inline bool chmax(T& a, const T& b) {bool compare = a < b;
 // clang-format on
 
 
-
 /* main section */
-void solve(long long N, long long Q, std::vector<long long> A, std::vector<long long> B, std::vector<long long> C, std::vector<long long> D){
-
+void solve(int A, int B, int C){
+	int ans = 0;
+	ans = A / C;
+	if ((ans * C) != A)
+		ans += 1;
+	if ((ans * C) > B)
+		cout << -1 << endl;
+	else
+		cout << ans * C << endl;
 }
 
 int main(){
-    long long N;
-	std::scanf("%lld", &N);
-	long long Q;
-	std::scanf("%lld", &Q);
-	std::vector<long long> A(N);
-	std::vector<long long> B(N);
-	for(int i = 0 ; i < N ; i++){
-		std::scanf("%lld", &A[i]);
-		std::scanf("%lld", &B[i]);
-	}
-	std::vector<long long> C(Q);
-	std::vector<long long> D(Q);
-	for(int i = 0 ; i < Q ; i++){
-		std::scanf("%lld", &C[i]);
-		std::scanf("%lld", &D[i]);
-	}
-    solve(N, Q, std::move(A), std::move(B), std::move(C), std::move(D));
-    return 0;
+	int A;
+	std::scanf("%d", &A);
+	int B;
+	std::scanf("%do", &B);
+	int C;
+	std::scanf("%d", &C);
+	solve(A, B, C);
+	return 0;
 }
