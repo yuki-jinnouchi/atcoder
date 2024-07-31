@@ -81,8 +81,6 @@ template <typename T> inline bool chmax(T& a, const T& b) {bool compare = a < b;
 // def check(p,q): return 0<=p<H and 0<=q<W and C[p][q]=='.'
 // bool out_grid(ll i, ll j, ll h, ll w) { return (!(0 <= i && i < h && 0 <= j && j < w));}
 
-
-
 /* main section */
 void solve(std::string S){
     string minS, maxS;
