@@ -81,86 +81,38 @@ template <typename T> inline bool chmax(T& a, const T& b) {bool compare = a < b;
 // def check(p,q): return 0<=p<H and 0<=q<W and C[p][q]=='.'
 // bool out_grid(ll i, ll j, ll h, ll w) { return (!(0 <= i && i < h && 0 <= j && j < w));}
 
-void print_connect(vvi connect, int num){
-    unsigned long i;
-    int flag;
-    int length;
-
-    flag = 1;
-    while(flag == 1){
-        flag = 0;
-        i = 0;
-        while(i < connect.size() && flag == 0){
-            if (connect[i][1] == num){
-                num = connect[i][0];
-                flag = 1;
-            }
-            i++;
+void solve(int N, int Q, vvi query){
+    vi front(N, -1), back(N, -1);
+    int tmp_front = -1;
+    int tmp_back = -1;
+    rep(i, Q){
+        if (query[i][0] == 1){
+            front[query [i][2] - 1] = query[i][1];
+            back[query[i][1] - 1] = query[i][2];
         }
-    }
-
-    int num_dup = num;
-    flag = 1;
-    length = 1;
-    while(flag == 1){
-        flag = 0;
-        i = 0;
-        while(i < connect.size() && flag == 0){
-            if (connect[i][0] == num_dup){
-                num_dup = connect[i][1];
-                length++;
-                flag = 1;
-            }
-            i++;
+        else if (query[i][0] == 2){
+            front[query[i][2] - 1] = -1;
+            back[query[i][1] - 1] = -1;
         }
-    }
-
-    cout << length << " ";
-    cout << num;
-
-    flag = 1;
-    while(flag == 1){
-        flag = 0;
-        i = 0;
-        while(i < connect.size() && flag == 0){
-            if (connect[i][0] == num){
-                num = connect[i][1];
-                cout << " " << num;
-                flag = 1;
+        else if (query[i][0] == 3){
+            tmp_front  = query[i][1];
+            vi ans = {tmp_front};
+            while(tmp_front != -1){
+                tmp_front = front[tmp_front - 1];
+                if (tmp_front != -1)
+                    ans.insert(ans.begin(), tmp_front);
             }
-            i++;
-        }
-    }
-    cout << endl;
-    return;
-}
+            tmp_back = query[i][1];
+            while(tmp_back != -1){
+                tmp_back = back[tmp_back - 1];
+                if (tmp_back != -1)
+                    ans.push_back(tmp_back);
+            }
 
-void solve(int Q, vvi query){
-    vvi connect;
-    int i = 0;
-    unsigned long j;
-    int flag;
-    while(i < Q){
-        while(i < Q && query[i][0] != 3){
-            if (query[i][0] == 1){
-                connect.pb({query[i][1], query[i][2]});
-            }
-            else if (query[i][0] == 2){
-                j = 0;
-                flag = 0;
-                while(j < connect.size() && flag == 0){
-                    if (connect[j][0] == query[i][1] && connect[j][1] == query[i][2]){
-                        connect.erase(connect.begin() + j);
-                        flag = 1;
-                    }
-                    j++;
-                }
-            }
-            i++;
-        }
-        while(i < Q && query[i][0] == 3){
-            print_connect(connect, query[i][1]);
-            i++;
+            std::cout << ans.size();
+            rep(i, ans.size())
+                std::cout << " "<< ans[i];
+            std::cout << endl;
         }
     }
     return;
@@ -178,6 +130,6 @@ int main(){
         else
             cin >> query[i][1];
     }
-    solve(Q, query);
+    solve(N, Q, query);
     return 0;
 }
