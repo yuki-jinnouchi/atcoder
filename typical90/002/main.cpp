@@ -99,22 +99,23 @@ int check(string s){
         return false;
 }
 
-
 /* main section */
 void solve(ll N){
     if (N % 2 == 1)
         cout << endl;
-    bitrep(i, N){
-        string s = "";
-        repd(j, N){
-            if(!(i & (1<<j))){
-                s += "(";
-            }else{
-                s += ")";
+    else {
+        bitrep(i, N){
+            string s = "";
+            repd(j, N){
+                if(!(i & (1<<j))){
+                    s += "(";
+                }else{
+                    s += ")";
+                }
             }
+            if (check(s))
+                cout << s << endl;
         }
-        if (check(s))
-            cout << s << endl;
     }
     return;
 }
