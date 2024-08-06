@@ -81,45 +81,21 @@ template <typename T> inline bool chmax(T& a, const T& b) {bool compare = a < b;
 // def check(p,q): return 0<=p<H and 0<=q<W and C[p][q]=='.'
 // bool out_grid(ll i, ll j, ll h, ll w) { return (!(0 <= i && i < h && 0 <= j && j < w));}
 
-int check_same(vi a, vi b){
-    if (a[0] != b[0]){
-        return false;
-    }
-    rep(i, a[0]){
-        if (a[i + 1] != b[i + 1]){
-            return false;
-        }
-    }
-    return true;
-}
-
-void solve(int N, vvi L){
-    int i = 1;
-    while(i < N){
-        if (check_same(L[i], L[i - 1])){
-            L.erase(L.begin() + i);
-            N--;
-        } else {
-            i++;
-        }
-    }
-    cout << L.size() << endl;
-}
-
 int main(){
     int N;
     cin >> N;
 
-    vvi L(N, vi(1, 0));
+    set<vi> L;
     rep(i, N){
-        cin >> L[i][0];
-        rep(j, L[i][0]){
+        vi temp(1, 0);
+        cin >> temp[0];
+        rep(j, temp[0]){
             int tmp;
             cin >> tmp;
-            L[i].pb(tmp);
+            temp.pb(tmp);
         }
+        L.insert(temp);
     }
-    sort(all(L));
-    solve(N, L);
+    cout << L.size() << endl;
     return 0;
 }
