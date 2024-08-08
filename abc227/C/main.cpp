@@ -37,16 +37,10 @@ using sts = set<string>;
 
 /* main section */
 void solve(ll N){
-    ll root2, root3;
-    ll A, B;
     ll count = 0;
-    root3 = cbrt(N);
-    rep(i, root3){
-        A = i + 1;
-        root2 = sqrt(N / A) - A + 1;
-        rep(j, root2){
-            B = A + j;
-            count += (N / (A * B)) - B + 1;
+    for(ll a = 1; a*a*a <= N; a++){
+        for(ll b = a; a*b*b <= N; b++){
+            count += floor(N/(a*b)) - b + 1;
         }
     }
     cout << count << endl;
