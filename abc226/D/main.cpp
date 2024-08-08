@@ -81,63 +81,33 @@ template <typename T> inline bool chmax(T& a, const T& b) {bool compare = a < b;
 // def check(p,q): return 0<=p<H and 0<=q<W and C[p][q]=='.'
 // bool out_grid(ll i, ll j, ll h, ll w) { return (!(0 <= i && i < h && 0 <= j && j < w));}
 
-int is_different(vll magic_a, vll magic_b){
-    ll times;
-
-    if ((magic_a[0] == 0 && magic_b[0] != 0) || (magic_a[0] != 0 && magic_b[0] == 0))
-        return true;
-    else if ((magic_a[1] == 0 && magic_b[1] != 0) || (magic_a[1] != 0 && magic_b[1] == 0))
-        return true;
-
-    if (magic_a[0] == 0 || magic_b[0] == 0)
-        times = magic_a[1] / magic_b[1];
-    else if (magic_a[1] == 0 || magic_b[1] == 0)
-        times = magic_a[0] / magic_b[0];
-    else
-        times = magic_a[0] / magic_b[0];
-    times = abs(times);
-
-    if (magic_a[0] * times == magic_b[0] && magic_a[1] * times == magic_b[1])
-        return false;
-    else
-        return true;
-}
-
-// check if there is a same magic in magics vector
-int check_all (vll magic, vvll magics){
-    rep(i, magics.size()){
-        if (is_different(magic, magics[i]) == false)
-            return false;
-    }
-    return true;
-}
-
 /* main section */
 void solve(ll N, vll x, vll y){
-    vvll magics;
-    ll vector_x, vector_y;
-    vll magic_a(2), magic_b(2);
-    int times;
+    set <pair<ll, ll>> magics;
+    ll v1_x, v1_y, v2_x, v2_y, gs;
 
     rep(i, N){
-        rep(j, N - (i + 1)){
-            vector_x = x[i] - x[i + j + 1];
-            vector_y = y[i] - y[i + j + 1];
-            times = abs(gcd(vector_x, vector_y));
-            vector_x /= times;
-            vector_y /= times;
+        rep(j, N - i - 1){
+            v1_x = x[i + j + 1] - x[i];
+            v1_y = y[i + j + 1] - y[i];
+            v2_x = -v1_x;
+            v2_y = -v1_y;
 
-            magic_a = {vector_x, vector_y};
-            if (check_all(magic_a, magics)){
-                magics.push_back(magic_a);
-                // cout << "magic_a: " << magic_a[0] << " " << magic_a[1] << endl;
-            }
-            magic_b = {0 - vector_x, 0 - vector_y};
-            if (check_all(magic_b, magics)){
-                magics.push_back(magic_b);
-                // cout << "magic_b: " << magic_b[0] << " " << magic_b[1] << endl;
-            }
-            // cout << "i: " << i << " j: " << j << " y:" << i+ j + 1 << " vector_x: " << vector_x << " vector_y: " << vector_y << endl;
+            if (v1_x == 0)
+                magics.insert(make_pair(0, v1_y/abs(v1_y)));
+            else if (v1_y == 0)
+                magics.insert(make_pair(v1_x/abs(v1_x), 0));
+            gs = abs(gcd(v1_x, v1_y));
+            if (gs != 0)
+                magics.insert(make_pair(v1_x/gs, v1_y/gs));
+
+            if (v2_x == 0)
+                magics.insert(make_pair(0, v2_y/abs(v2_y)));
+            else if (v2_y == 0)
+                magics.insert(make_pair(v2_x/abs(v2_x), 0));
+            gs = abs(gcd(v2_x, v2_y));
+            if (gs != 0)
+                magics.insert(make_pair(v2_x/gs, v2_y/gs));
         }
     }
     cout << magics.size() << endl;
