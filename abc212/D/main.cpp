@@ -75,39 +75,25 @@ template <typename T> inline bool chmax(T& a, const T& b) {bool compare = a < b;
 // template <typename T> inline T lcm(T a, T b) {return (a * b) / gcd(a, b);}
 // clang-format on
 
-void solve(ll N , vvll query){
-    vll balls;
-    rep(i, N){
-        if (query[i][0] == 1){
-            balls.push_back(query[i][1]);
-        }else if(query[i][0] == 2){
-            rep(j, balls.size()){
-                balls[j] += query[i][1];
-            }
-        }else{
-            sort(balls.begin(), balls.end(), greater<int>());
-            cout << balls.back() << endl;
-            balls.pop_back();
-        }
-    }
-}
-
 int main(){
     ll N;
     cin >> N;
-    vvll query(N, vll(2, 0));
+
+    priority_queue<ll, vector<ll>, greater<ll>> balls;
+    ll S = 0;
     ll temp_a, temp_b;
     rep(i, N){
         cin >> temp_a;
-        if (temp_a != 3){
+        if (temp_a == 1){
             cin >> temp_b;
-            query[i][0] = temp_a;
-            query[i][1] = temp_b;
+            balls.push(temp_b - S);
+        }else if (temp_a == 2){
+            cin >> temp_b;
+            S += temp_b;
         }else{
-            query[i][0] = temp_a;
+            cout << balls.top() + S << endl;
+            balls.pop();
         }
-        // cout << q[i][0] << q[i][1] << endl;
     }
-    solve(N, query);
     return 0;
 }
