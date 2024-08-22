@@ -36,20 +36,27 @@ using sts = set<string>;
 #define rrepd(i,n) for(ll i=n;i>=1;i--)
 
 /* main section */
-void solve(long long N){
-    ll min = pow(-2, 31);
-    ll max = pow(2, 31);
-    if (min <= N && N < max) {
-        cout << "Yes" << endl;
-    }
-    else {
-        cout << "No" << endl;
-    }
+void solve(ll H, ll W, vvll A){
+	rep(i, W) {
+		rep(j, H) {
+			cout << A[j][i];
+			if (j != H - 1) {
+				cout << " ";
+			}
+		}
+		cout << endl;
+	}
 }
 
 int main(){
-    long long N;
-	std::scanf("%lld", &N);
-    solve(N);
+	ll H, W;
+	cin >> H >> W;
+	vvll A(H, vll(W, 0));
+	rep(i, H) {
+		rep(j, W) {
+			cin >> A[i][j];
+		}
+	}
+	solve(H, W, A);
     return 0;
 }
