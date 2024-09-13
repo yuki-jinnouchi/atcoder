@@ -37,8 +37,7 @@ using sts = set<string>;
 
 /* main section */
 // void solve(long long N, std::vector<long long> a){
-
-
+//
 // }
 
 int main(){
