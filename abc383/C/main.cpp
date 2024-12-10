@@ -35,49 +35,36 @@ using sts = set<string>;
 #define repd(i,n) for(ll i=n-1;i>=0;i--)
 #define rrepd(i,n) for(ll i=n;i>=1;i--)
 
-void print(vvi vec){
-    rep(i, vec.size()){
-        rep(j, vec[i].size()){
-            cout << vec[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-}
+const int dx[4] = {0, 1, 0, -1};
+const int dy[4] = {1, 0, -1, 0};
+// const int INF = 1e9;
 
-vvi rewrite(vvi S, int D){
-    rep(i, S.size()){
-        rep(j, S[i].size()){
-            if(S[i][j] == D){
-                if(0 < i && -1 <= S[i-1][j] && S[i-1][j] < D){
-                    S[i-1][j] = D - 1;
-                }
-                if(i < (ll) S.size() - 1 && -1 <= S[i+1][j] && S[i+1][j] < D){
-                    S[i+1][j] = D - 1;
-                }
-                if(0 < j && -1 <= S[i][j-1] && S[i][j-1] < D){
-                    S[i][j-1] = D - 1;
-                }
-                if(j < (ll) S[i].size() - 1 && -1 <= S[i][j+1] && S[i][j+1] < D){
-                    S[i][j+1] = D - 1;
-                }
+void solve(int H, int W, int D, vvi vec, queue<vi> que){
+    vi now;
+    int x, y, nx, ny;
+
+    while(!que.empty()){
+        now = que.front();
+        que.pop();
+        x = now[0];
+        y = now[1];
+        rep(i, 4){
+            nx = x + dx[i];
+            ny = y + dy[i];
+            if (nx < 0 || nx >= H || ny < 0 || ny >= W){
+                continue;
+            }
+            if (vec[nx][ny] == -1 || vec[nx][ny] > vec[x][y] + 1){
+                vec[nx][ny] = vec[x][y] + 1;
+                que.push({nx, ny});
             }
         }
-    }
-    return S;
-}
-
-void solve(int H, int W, int D, vvi S){
-    // print(S);
-    rep(i, D){
-        S = rewrite(S, D - i);
-        // print(S);
     }
 
     int ans = 0;
     rep(i, H){
         rep(j, W){
-            if (S[i][j] >= 0){
+            if (0 <= vec[i][j] && vec[i][j] <= D){
                 ans++;
             }
         }
@@ -90,9 +77,13 @@ int main(){
     int H, W, D;
     cin >> H >> W >> D;
 
-    string str;
     vvi vec(H, vi(W, 0));
     vi line(W);
+    string str;
+
+    vi start(2);
+    queue<vi> que;
+
     rep(i, H){
         cin >> str;
         rep(j, W){
@@ -103,11 +94,13 @@ int main(){
                 line[j] = -1;
             }
             else if(str[j] == 'H'){
-                line[j] = D;
+                line[j] = 0;
+                start = {(int) i, (int) j};
+                que.push(start);
             }
         }
         vec[i] = line;
     }
-    solve(H, W, D, vec);
+    solve(H, W, D, vec, que);
     return 0;
 }
