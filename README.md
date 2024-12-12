@@ -7,4 +7,4 @@ ID: Jinn_i
 - [My Achievements](https://kenkoooo.com/atcoder/#/table/Jinn_i) (@AtCoder Problems)
 
 ## Status
-![screenshot of progress](https://github.com/yuki-jinnouchi/atcoder/blob/main/Status_2024-07-23.png)
+![screenshot of progress](https://github.com/yuki-jinnouchi/atcoder/blob/main/Status_2024-12-12.png)
