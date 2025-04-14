@@ -36,28 +36,26 @@ using sts = set<string>;
 #define rrepd(i,n) for(ll i=n;i>=1;i--)
 
 /* main section */
-void solve(int A, int B, int C, int D){
-	if (A < C){
-		cout << "Takahashi" << endl;
-		return;
-	} else if (A > C){
-		cout << "Aoki" << endl;
-		return;
-	} else {
-		if (B <= D){
-			cout << "Takahashi" << endl;
-			return;
-		} else {
-			cout << "Aoki" << endl;
-			return;
+void solve(set<int> A){
+	int ans = 0;
+	rep(i, 2000 + 1){
+		if (A.find(i) == A.end()){
+			ans = i;
+			break;
 		}
 	}
+	cout << ans << endl;
 	return;
 }
 
 int main(){
-	int A, B, C, D;
-	cin >> A >> B >> C >> D;
-	solve(A, B, C, D);
-    return 0;
+	int N, num;
+	set<int> A;
+	cin >> N;
+	rep(i, N){
+		cin >> num;
+		A.insert(num);
+	}
+	solve(A);
+	return 0;
 }
